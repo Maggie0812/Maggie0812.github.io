@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Jelly Skins 預約</title>
+</head>
+
+<body>
+  <h3> 畫面自動跳轉.... </h3>
+  <span id="os">Detecting...</span>
+  <br>
+  <span id="error"></span>
+</body>
+
+<script>
+  function getCurrentOperatingSystem() {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/windows phone/i.test(userAgent)) {
+      return "Windows Phone";
+    }
+
+    if (/android/i.test(userAgent)) {
+      return "Android";
+    }
+
+    // // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/g.test(userAgent) && !window.MSStream) {
+      return "iOS";
+    }
+
+    return "Desktop"
+  }
+
+  // MAIN
+  try {
+    const os = getCurrentOperatingSystem();
+    document.getElementById("os").textContent = "系統:" + os;
+    switch (os) {
+      case "iOS": {
+        window.location.replace("calshow://");
+        break;
+      }
+      default: {
+        window.location.replace("googlecalendar://");
+        break;
+      }
+    }
+  } catch (err) {
+    document.getElementById("error").textContent = err
+  }
+
+</script>
+
+</html>
